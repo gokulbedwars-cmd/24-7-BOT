@@ -387,7 +387,26 @@ function createBot() {
       }
     }, 60000);
 
-    bot.once('spawn', () => {
+ bot.once('spawn', () => {
+  console.log("Bot spawned")
+
+  setInterval(() => {
+    const actions = ['forward', 'back', 'left', 'right']
+    const action = actions[Math.floor(Math.random() * actions.length)]
+
+    bot.setControlState(action, true)
+
+    setTimeout(() => {
+      bot.setControlState(action, false)
+    }, 2000)
+
+    // jump
+    bot.setControlState('jump', true)
+    setTimeout(() => bot.setControlState('jump', false), 500)
+
+  }, 15000)
+})
+
       clearTimeout(connectionTimeout);
       botState.connected = true;
       botState.lastActivity = Date.now();
